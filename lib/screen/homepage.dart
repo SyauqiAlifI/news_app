@@ -11,15 +11,21 @@ class HomePage extends StatelessWidget {
     var news = News();
     return Scaffold(
       appBar: AppBar(
-        leading: Container(
-          decoration:
-          const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
-          width: 10,
-          margin: const EdgeInsets.all(8),
-        ),
-        title: const Text(
-          'Good Morning',
-          style: TextStyle(fontSize: 20, color: Colors.black),
+        title: Row(
+          children: [
+            Container(
+              width: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100.0),
+                child: Image.asset('images/myMuka.jpg'),
+              ),
+            ),
+            const SizedBox(width: 16),
+            const Text(
+              'Good Morning',
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -34,10 +40,11 @@ class HomePage extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: news.getNews(),
-        builder: (context, snapshot) =>
-        snapshot.data != null ? NewsPage(
-            article: snapshot.data as List<Article>) : Center(
-          child: CircularProgressIndicator(),),
+        builder: (context, snapshot) => snapshot.data != null
+            ? NewsPage(article: snapshot.data as List<Article>)
+            : const Center(
+                child: const CircularProgressIndicator(),
+              ),
       ),
     );
   }
